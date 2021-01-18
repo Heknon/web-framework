@@ -9,8 +9,17 @@ class ApiModuleCoordinator:
         self.api_registry = api_registry
         self.registered_modules = self.filter_and_get_registered_modules()
         self.full_route_method_map = self.get_url_method_map()
+        self.conditional_routes = self.get_conditional_routes()
         self.__type_decoders = set()
         self.__type_encoders = set()
+
+    def get_conditional_routes(self):
+        res = {}
+        for i in self.registered_modules:
+            for r in i.meta.routes:
+                res[i.normalize_route(r, False)] = i.conditional_routes
+
+        return res
 
     def get_url_method_map(self) -> {str: Callable}:
         url_method_map = {}

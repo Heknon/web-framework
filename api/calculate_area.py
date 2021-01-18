@@ -1,11 +1,18 @@
-import re
+import os
 
-from web_framework import MethodReturnContentType, HttpMethod, HttpRequest, RequestMappingMeta, RequestMapping, GetMapping, PostMapping, QueryParameter, HttpResponse, HttpClient
+from web_framework import MethodReturnContentType, HttpMethod, HttpRequest, RequestMappingMeta, RequestMapping, GetMapping, PostMapping, QueryParameter, HttpResponse, HttpClient, ConditionalHandler, HttpStatus
 
 
 @RequestMapping(RequestMappingMeta("/", "/index.html", acceptable_methods={HttpMethod.GET}))
 class Index:
     images = {}
+
+    @staticmethod
+    @GetMapping(content_type=MethodReturnContentType.TEXT)
+    @ConditionalHandler(condition=lambda req: not os.path.exists(req.url))
+    def test(res: HttpResponse):
+        res.status = HttpStatus.NOT_FOUND
+        return "PATH DOES NOT EXIST"
 
     @staticmethod
     @GetMapping('calculate-area', content_type=MethodReturnContentType.TEXT)

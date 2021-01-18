@@ -1,5 +1,5 @@
 __all__ = ['ApiModule', 'ApiModuleCoordinator', 'MethodReturnContentType', 'ApiMethodExecutor', 'RequestMappingMeta', 'RequestMapping', 'GetMapping', 'PutMapping', 'PatchMapping', 'PostMapping', 'DeleteMapping', 'ConnectMapping',
-           'TraceMapping', 'HeadMapping', 'OptionsMapping', 'QueryParameter', 'Parameter']
+           'TraceMapping', 'HeadMapping', 'OptionsMapping', 'QueryParameter', 'Parameter', "ConditionalHandler"]
 
 from .method_return_content_type import MethodReturnContentType
 from .decorator import *

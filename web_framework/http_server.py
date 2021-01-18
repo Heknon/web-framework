@@ -3,7 +3,7 @@ import os
 import threading
 
 from web_framework.api import ApiRegistry
-from web_framework.utils import get_meta_attribute
+from web_framework.utils import get_meta_attribute, get_conditional_handler
 from . import HttpClient, HttpStatus
 from .http_base import HttpRequest, HttpResponse
 
@@ -46,24 +46,15 @@ class HttpServer:
 
     def client_request_handler(self, client: HttpClient, request: HttpRequest):
         has_method_call = request.url in self.api_registry.api_module_coordinator.full_route_method_map
+        for class_route, methods in self.api_registry.api_module_coordinator.conditional_routes.items():
+            for method in methods:
+                if request.url.startswith(class_route) and get_conditional_handler(method)(request):
+                    self.execute_method(method, request, client)
+            break
 
-        print(request.url)
-        print(self.api_registry.api_module_coordinator.full_route_method_map)
-        print(has_method_call)
         if has_method_call:
             method = self.api_registry.api_module_coordinator.find_matching_method(request.url)
-            method_meta = get_meta_attribute(method)
-            clazz = getattr(method_meta, 'parent').clazz
-            parent_meta = get_meta_attribute(clazz)
-            method_http_methods_contains_method = method_meta.acceptable_methods is not None and request.method in method_meta.acceptable_methods
-            class_http_methods_contains_method = parent_meta.acceptable_methods is not None and request.method in parent_meta.acceptable_methods
-
-            if not class_http_methods_contains_method and not method_http_methods_contains_method:
-                response = HttpResponse.build_empty_status_response(request, HttpStatus.BAD_REQUEST, f'Class {clazz} and method {method} do not accept {request.method}', client)
-            else:
-                response = HttpResponse.build_from_function(request, method, self.api_registry.adapter_container, client)
-
-            response.send_to_client(client.socket)
+            self.execute_method(method, request, client)
         else:
             path = self.root_index_directory + (self.index_file if request.url == "/" else request.url)
             """
@@ -75,3 +66,17 @@ class HttpServer:
             response.send_to_client(client.socket)
         client.shutdown()
         exit()
+
+    def execute_method(self, method, request, client):
+        method_meta = get_meta_attribute(method)
+        clazz = getattr(method_meta, 'parent').clazz
+        parent_meta = get_meta_attribute(clazz)
+        method_http_methods_contains_method = method_meta.acceptable_methods is not None and request.method in method_meta.acceptable_methods
+        class_http_methods_contains_method = parent_meta.acceptable_methods is not None and request.method in parent_meta.acceptable_methods
+
+        if not class_http_methods_contains_method and not method_http_methods_contains_method:
+            response = HttpResponse.build_empty_status_response(request, HttpStatus.BAD_REQUEST, f'Class {clazz} and method {method} do not accept {request.method}', client)
+        else:
+            response = HttpResponse.build_from_function(request, method, self.api_registry.adapter_container, client)
+
+        response.send_to_client(client.socket)
