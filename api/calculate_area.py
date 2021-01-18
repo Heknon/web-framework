@@ -9,7 +9,7 @@ class Index:
 
     @staticmethod
     @GetMapping(content_type=MethodReturnContentType.TEXT)
-    @ConditionalHandler(condition=lambda req: not os.path.exists(req.url))
+    @ConditionalHandler(condition=lambda req: not os.path.exists("webroot" + req.url))
     def test(res: HttpResponse):
         res.status = HttpStatus.NOT_FOUND
         return "PATH DOES NOT EXIST"

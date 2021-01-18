@@ -17,6 +17,7 @@ downloads/
 eggs/
 venv/
 web_framework/__pycache__/
+.idea
 .eggs/
 lib/
 lib64/

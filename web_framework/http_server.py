@@ -48,7 +48,7 @@ class HttpServer:
         has_method_call = request.url in self.api_registry.api_module_coordinator.full_route_method_map
         for class_route, methods in self.api_registry.api_module_coordinator.conditional_routes.items():
             for method in methods:
-                if request.url.startswith(class_route) and get_conditional_handler(method)(request):
+                if not has_method_call and request.url.startswith(class_route) and get_conditional_handler(method)(request):
                     self.execute_method(method, request, client)
             break
 
