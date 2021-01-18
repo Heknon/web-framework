@@ -16,6 +16,7 @@ dist/
 downloads/
 eggs/
 venv/
+web_framework/__pycache__/
 .eggs/
 lib/
 lib64/
