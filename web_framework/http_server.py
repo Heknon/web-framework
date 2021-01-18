@@ -50,10 +50,7 @@ class HttpServer:
         print(request.url)
         print(self.api_registry.api_module_coordinator.full_route_method_map)
         print(has_method_call)
-        if not has_method_call and request.url != "/":
-            client.shutdown()
-            exit()
-        elif has_method_call:
+        if has_method_call:
             method = self.api_registry.api_module_coordinator.find_matching_method(request.url)
             method_meta = get_meta_attribute(method)
             clazz = getattr(method_meta, 'parent').clazz

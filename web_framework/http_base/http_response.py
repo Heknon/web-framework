@@ -34,12 +34,11 @@ class HttpResponse:
 
     @staticmethod
     def build_from_file(request: HttpRequest, path: str, client):
-        extension = os.path.splitext(path)[1][1::]
-        content_type = ContentType(extension)
         if not os.path.isfile(path):
-            print("fdsfs")
-            return HttpResponse(str(content_type), request.http_version, HttpStatus.NOT_FOUND, bytes(), client)
+            return HttpResponse(str(ContentType('text')), request.http_version, HttpStatus.NOT_FOUND, bytes(b"fdfds"), client)
         else:
+            extension = os.path.splitext(path)[1][1::]
+            content_type = ContentType(extension)
             html: bytes
             with open(path, 'rb') as file:
                 html = file.read() + b"\r\n\r\n"
