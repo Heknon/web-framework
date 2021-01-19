@@ -30,10 +30,14 @@ class Parameter:
                         raise RuntimeError(f"Parameter {self} has result of None. Parameter is required and cannot be None!")
                     return name, self.default_value
 
-                result = list(map(lambda res: adapter_container.find_type_adapter(self.parameter_type, self.content_type).decode(res), result))
-                if len(result) == 1:
-                    result = result[0]
-                return name, result
+                results = []
+                for i in result:
+                    if i is None:
+                        continue
+                    results.append(adapter_container.find_type_adapter(self.parameter_type, self.content_type).decode(i))
+                if len(results) == 1:
+                    results = results[0]
+                return name, results
 
     def get_value_from_request(self, request) -> [bytes]:
         raise NotImplementedError(f"Must implement get_value_from_request in {self}")

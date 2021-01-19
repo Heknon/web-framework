@@ -3,7 +3,7 @@ import os
 import inspect
 
 from web_framework.api.module import ApiModuleCoordinator
-from web_framework.utils import scantree
+from web_framework.utils import scan_tree
 
 
 class ApiRegistry:
@@ -22,7 +22,7 @@ class ApiRegistry:
     def register_api_package(self, package_path):
         api = importlib.import_module(package_path)
         dir_path = api.__path__[0]
-        paths = [(i.name, i.path) for i in scantree(dir_path)]
+        paths = [(i.name, i.path) for i in scan_tree(dir_path)]
         for (name, path) in paths:  # recursively go over all __init__ files in package_path directory
             if '__init__.py' in name:
                 rel_path = os.path.splitext(os.path.relpath(path).replace('\\', '.'))[0]

@@ -15,5 +15,6 @@ class ContentType:
         "jpg": "image/jpeg",
         'ico': "image/vnd.microsoft.icon",
         'gif': "image/gif",
-        'json': 'application/json'
+        'json': 'application/json',
+        'xml': 'application/xml',
     }

@@ -1,6 +1,6 @@
 from typing import Callable
 
-from web_framework.utils import has_meta_attribute, get_meta_attribute, has_conditional_handler, add_to_meta_attribute
+from web_framework.utils import has_meta_attribute, get_meta_attribute, has_conditional_handler
 
 
 class ApiModule:

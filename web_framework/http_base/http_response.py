@@ -1,5 +1,4 @@
 import os
-import socket
 import time
 from typing import Callable
 
@@ -24,17 +23,10 @@ class HttpResponse:
         self.data += '\r\n'.encode()
         self.data += self.html
 
-    def set_fields(self, other):
-        self.content_type = other.content_type
-        self.http_version = other.http_version
-        self.status = other.status
-        self.html = other.html
-        self.client = other.client
-
     def add_header(self, header, value):
         self.data += f"{header}: {value}\r\n".encode()
 
-    def send_to_client(self, client: socket.socket):
+    def send_to_client(self, client):
         self.__build_response()
         client.send(self.data)
 
@@ -63,4 +55,3 @@ class HttpResponse:
             with open(path, 'rb') as file:
                 html = file.read() + b"\r\n\r\n"
             return HttpResponse(str(content_type), request.http_version, HttpStatus.OK, html, client)
-

@@ -7,3 +7,4 @@ class MethodReturnContentType(Enum):
     JSON = ContentType('json')
     TEXT = ContentType('text')
     HTML = ContentType('html')
+    XML = ContentType('xml')

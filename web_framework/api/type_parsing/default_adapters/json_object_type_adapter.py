@@ -12,4 +12,4 @@ class JsonObjectTypeAdapter(TypeAdapter[object]):
         return json.loads(data.decode())
 
     def encode(self, data: object) -> bytes:
-        return json.dumps(data.__dict__).encode()
+        return json.dumps(data).encode()

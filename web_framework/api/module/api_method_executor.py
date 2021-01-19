@@ -39,13 +39,13 @@ class ApiMethodExecutor:
                 continue
             if value is HttpRequest:
                 results[n] = request
-                break
+                continue
             elif value is HttpClient:
                 results[n] = self.client
-                break
+                continue
             elif value is HttpResponse:
                 results[n] = self.response
-                break
+                continue
             if Parameter in get_base_classes(value) and value.name is None:
                 value.name = n
             name, result = value.parse(method=self.method, request=request, adapter_container=self.adapter_container)

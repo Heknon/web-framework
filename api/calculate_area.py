@@ -8,11 +8,11 @@ class Index:
     images = {}
 
     @staticmethod
-    @GetMapping(content_type=MethodReturnContentType.TEXT)
+    @GetMapping(content_type=MethodReturnContentType.JSON)
     @ConditionalHandler(condition=lambda req: not os.path.exists("webroot" + req.url))
-    def test(res: HttpResponse):
+    def test(req: HttpRequest, res: HttpResponse, q: QueryParameter(parameter_type=int)):
         res.status = HttpStatus.NOT_FOUND
-        return "PATH DOES NOT EXIST"
+        return {"status": res.status, "url": req.url, "query_data": q}
 
     @staticmethod
     @GetMapping('calculate-area', content_type=MethodReturnContentType.TEXT)

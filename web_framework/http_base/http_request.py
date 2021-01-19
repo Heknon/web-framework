@@ -1,4 +1,4 @@
-from web_framework.http_base.data_type import HttpHeader, HttpMethod
+from web_framework.http_base.data_type import HttpHeader, HttpMethod, QueryParameters
 
 
 class HttpRequest:
@@ -8,7 +8,7 @@ class HttpRequest:
         self.http_version: str = ""
         self.headers: [HttpHeader] = []
         self.mapped_headers = {}
-        self.query_parameters = {}
+        self.query_parameters: QueryParameters = QueryParameters()
         self.body = bytes()
 
     def find_header(self, name) -> HttpHeader:
