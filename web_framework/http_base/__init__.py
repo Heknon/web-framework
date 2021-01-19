@@ -1,3 +1,7 @@
+"""
+Contains any basic http stuff
+"""
+
 __all__ = ['HttpRequest', 'HttpResponse', 'HttpMethod', 'HttpHeader', 'HttpStatus', 'ContentType', 'QueryParameters']
 
 from .data_type import *

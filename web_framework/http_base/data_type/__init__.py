@@ -1,3 +1,7 @@
+"""
+Any HTTP related data type will be in this package
+"""
+
 __all__ = ['HttpStatus', 'HttpMethod', 'HttpHeader', 'ContentType', 'QueryParameters']
 
 from .http_status import HttpStatus

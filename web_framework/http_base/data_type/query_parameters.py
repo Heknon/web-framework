@@ -1,15 +1,20 @@
 class QueryParameters:
-    def __init__(self):
-        pass
+    """
+    Represents the query parameters of a URL and allows for easy, intuitive access
 
-    def get(self, item, default):
-        if item not in self.__dict__:
+    Methods
+    -------
+    get(name, default=None)
+        gets a query parameter by its name
+    """
+
+    def get(self, name, default=None):
+        if name not in self.__dict__:
             return default
-        return self.__dict__[item]
+        return self.__dict__[name]
 
-
-    def __getitem__(self, item):
-        return self.__dict__[item]
+    def __getitem__(self, name):
+        return self.__dict__[name]
 
     def __str__(self):
         return f"QueryParameters({self.__dict__})"

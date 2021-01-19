@@ -1,4 +1,10 @@
 class ContentType:
+    """
+    Represents the content type of http data
+
+    Builds the content type and makes it accessible through str()
+    """
+
     def __init__(self, content_type: str):
         self.__full_header = "Content-Type: " + self.__content_types[content_type.lower()]
 

@@ -4,6 +4,17 @@ T = TypeVar("T")
 
 
 class HttpHeader(Generic[T]):
+    """
+    Class for representing an HttpHeader
+
+    Attributes
+    ----------
+    name : str
+        the name of the header
+    value : T
+        the value of the header
+    """
+
     def __init__(self, name: str, value: T):
         self.name = name
         self.value = value

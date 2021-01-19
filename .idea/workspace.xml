@@ -3,25 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="ee1b1c34-d2ef-49f5-89af-b2cbf3dce2cd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/calculate_area.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/calculate_area.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/api_registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/api_registry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/module/api_method_executor.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/module/api_method_executor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/module/api_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/module/api_module.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/module/decorator/parameter.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/module/decorator/parameter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/module/decorator/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/module/decorator/parameters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/module/method_return_content_type.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/module/method_return_content_type.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/api/type_parsing/default_adapters/json_object_type_adapter.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/api/type_parsing/default_adapters/json_object_type_adapter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_framework/http_base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_framework/http_base/data_type/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/data_type/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_framework/http_base/data_type/content_type.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/data_type/content_type.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_framework/http_base/data_type/http_header.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/data_type/http_header.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_framework/http_base/data_type/http_method.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/data_type/http_method.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web_framework/http_base/data_type/http_status.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/data_type/http_status.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_framework/http_base/data_type/query_parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/data_type/query_parameters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_framework/http_base/http_request.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/http_request.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web_framework/http_base/http_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_base/http_response.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/http_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/http_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/http_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/parser/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/parser/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/parser/parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/parser/parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/parser/request_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/parser/request_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_framework/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_framework/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -126,16 +116,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/web_framework/http_base/http_response.py</url>
-          <line>36</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
