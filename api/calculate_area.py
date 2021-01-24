@@ -1,28 +1,29 @@
 import os
 
-from web_framework import MethodReturnContentType, HttpMethod, HttpRequest, RequestMappingMeta, RequestMapping, GetMapping, PostMapping, QueryParameter, HttpResponse, HttpClient, ConditionalHandler, HttpStatus
+from web_framework import MethodReturnContentType, HttpMethod, HttpRequest, RequestMapping, GetMapping, PostMapping, \
+    QueryParameter, HttpResponse, HttpClient, ConditionalHandler, HttpStatus
 
 
-@RequestMapping(RequestMappingMeta("/", "/index.html", acceptable_methods={HttpMethod.GET}))
+@GetMapping('calculate-next', content_type=MethodReturnContentType.TEXT)
+def handle_next(num: QueryParameter(parameter_type=int)):
+    return num + 1
+
+
+@GetMapping(content_type=MethodReturnContentType.JSON)
+@ConditionalHandler(condition=lambda req: not os.path.exists("webroot" + req.url))
+def test(req: HttpRequest, res: HttpResponse, q: QueryParameter(parameter_type=int)):
+    res.status = HttpStatus.NOT_FOUND
+    return {"status": res.status, "url": req.url, "query_data": q}
+
+
+@RequestMapping("/", "/index.html", acceptable_methods={HttpMethod.GET})
 class Index:
     images = {}
-
-    @staticmethod
-    @GetMapping(content_type=MethodReturnContentType.JSON)
-    @ConditionalHandler(condition=lambda req: not os.path.exists("webroot" + req.url))
-    def test(req: HttpRequest, res: HttpResponse, q: QueryParameter(parameter_type=int)):
-        res.status = HttpStatus.NOT_FOUND
-        return {"status": res.status, "url": req.url, "query_data": q}
 
     @staticmethod
     @GetMapping('calculate-area', content_type=MethodReturnContentType.TEXT)
     def handle_area_calc(height: QueryParameter(parameter_type=int), width: QueryParameter(parameter_type=int)):
         return height * width / 2
-
-    @staticmethod
-    @GetMapping('calculate-next', content_type=MethodReturnContentType.TEXT)
-    def handle_next(num: QueryParameter(parameter_type=int)):
-        return num + 1
 
     @staticmethod
     @PostMapping('upload', content_type=MethodReturnContentType.TEXT)

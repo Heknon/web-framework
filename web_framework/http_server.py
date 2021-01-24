@@ -49,6 +49,8 @@ class HttpServer:
         :param module_paths: the packages to go through and recursively look for API modules
         """
 
+        # TODO: Create APIModule as interface. Make an APIModule for function and class
+
         self._ip = ("0.0.0.0", 80)
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._is_active = True
@@ -120,15 +122,13 @@ class HttpServer:
         """
 
         has_method_call = request.url in self.api_registry.api_module_coordinator.full_route_method_map
-        for class_route, methods in self.api_registry.api_module_coordinator.conditional_routes.items():
-            for method in methods:
-                if not has_method_call and request.url.startswith(class_route) and get_conditional_handler(method)(request):
-                    self.execute_method(method, request, client).send_to_client(client)
-            break
+        conditional_method = self.api_registry.api_module_coordinator.find_conditional_handler_match(request)
+        if conditional_method is not None:
+            self.api_registry.execute_method(conditional_method, request, client).send_to_client(client)
 
         if has_method_call:
             method = self.api_registry.api_module_coordinator.find_matching_method(request.url)
-            self.execute_method(method, request, client).send_to_client(client)
+            self.api_registry.execute_method(method, request, client).send_to_client(client)
         else:
             path = self.root_index_directory + (self.index_file if request.url == "/" else request.url)
             response = HttpResponse.build_from_file(request, path, client)
@@ -136,26 +136,4 @@ class HttpServer:
         client.shutdown()
         exit()
 
-    def execute_method(self, method, request, client) -> HttpResponse:
-        """
-        Executes an API method and builds an HttpResponse
 
-        :param method: the method to execute
-        :param request: the HttpRequest made that resulted in the method being called
-        :param client: the received client socket
-        :return:
-        """
-
-        method_meta = get_meta_attribute(method)
-        clazz = getattr(method_meta, 'parent').clazz
-        parent_meta = get_meta_attribute(clazz)
-        method_http_methods_contains_method = method_meta.acceptable_methods is not None and request.method in method_meta.acceptable_methods
-        class_http_methods_contains_method = parent_meta.acceptable_methods is not None and request.method in parent_meta.acceptable_methods
-
-        if not class_http_methods_contains_method and not method_http_methods_contains_method:
-            response = HttpResponse.build_empty_status_response(
-                request, HttpStatus.BAD_REQUEST, f'Class {clazz} and method {method} do not accept {request.method}', client)
-        else:
-            response = HttpResponse.build_from_function(request, method, self.api_registry.adapter_container, client)
-
-        return response

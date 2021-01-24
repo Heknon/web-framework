@@ -13,6 +13,14 @@ class QueryParameters:
             return default
         return self.__dict__[name]
 
+    def clone(self):
+        """Clones the QueryParameters object"""
+        res = QueryParameters()
+        for k, v in self.__dict__.items():
+            res.__dict__[k] = v
+
+        return res
+
     def __getitem__(self, name):
         return self.__dict__[name]
 

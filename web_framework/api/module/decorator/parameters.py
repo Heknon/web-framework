@@ -8,6 +8,8 @@ class QueryParameter(Parameter):
         super().__init__(parameter_type, name, content_type, default_value, required)
 
     def get_value_from_request(self, request) -> [bytes]:
+        if request.query_parameters is None:
+            return None
         val = request.query_parameters.get(self.name, None)
         if val is not None and not isinstance(val, Iterable):
             val = [val]

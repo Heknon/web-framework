@@ -10,7 +10,7 @@ class GetMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.GET}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class PostMapping(RequestMapping):
@@ -18,7 +18,7 @@ class PostMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.POST}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class PutMapping(RequestMapping):
@@ -26,7 +26,7 @@ class PutMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.PUT}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class PatchMapping(RequestMapping):
@@ -34,7 +34,7 @@ class PatchMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.PATCH}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class DeleteMapping(RequestMapping):
@@ -42,7 +42,7 @@ class DeleteMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.DELETE}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class HeadMapping(RequestMapping):
@@ -50,7 +50,7 @@ class HeadMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.HEAD}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class ConnectMapping(RequestMapping):
@@ -58,7 +58,7 @@ class ConnectMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.CONNECT}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class OptionsMapping(RequestMapping):
@@ -66,7 +66,7 @@ class OptionsMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.OPTIONS}
-        super().__init__(meta)
+        super().__init__(meta=meta)
 
 
 class TraceMapping(RequestMapping):
@@ -74,4 +74,4 @@ class TraceMapping(RequestMapping):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.TRACE}
-        super().__init__(meta)
+        super().__init__(meta=meta)

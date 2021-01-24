@@ -2,8 +2,6 @@ from os import scandir
 
 from typing import ClassVar
 
-from web_framework.api.module.decorator import RequestMappingMeta
-
 META_ATTRIBUTE_KEY = "-__routing_api_meta__-"
 CONDITIONAL_HANDLER_KEY = '-__CONDITIONAL_HANDLER__-'
 
@@ -58,7 +56,7 @@ def set_meta_attribute(t, meta):
     return set_attribute(t, META_ATTRIBUTE_KEY, meta)
 
 
-def get_meta_attribute(t) -> RequestMappingMeta:
+def get_meta_attribute(t):
     """Uses get_attribute along with the meta key constant to easily allow getting meta"""
 
     return get_attribute(t, META_ATTRIBUTE_KEY)
@@ -105,6 +103,14 @@ def get_base_classes(clazz: ClassVar) -> {ClassVar}:
         for curr in get_base_classes(i):
             bases.add(curr)
     return bases
+
+
+def clone_map(dictionary):
+    res = {}
+    for k, v in dictionary.items():
+        res[k] = v
+
+    return res
 
 
 def scan_tree(path):

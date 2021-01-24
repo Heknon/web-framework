@@ -31,7 +31,7 @@ class AdapterContainer:
     def filter_and_get_type_adapters(self):
         from web_framework.api.type_parsing import TypeAdapter
         adapters = set()
-        for clazz in self.api_registry.registered_classes:
+        for clazz in self.api_registry.contains_request_mapping_meta:
             base_classes = get_base_classes(clazz)
             if TypeAdapter.__class__ in base_classes:
                 adapters.add(clazz)

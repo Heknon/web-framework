@@ -1,1 +1,1 @@
-from api.calculate_area import Index
+import api.calculate_area

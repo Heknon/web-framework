@@ -1,4 +1,5 @@
 from web_framework.http_base.data_type import HttpHeader, HttpMethod, QueryParameters
+from web_framework.utils import clone_map
 
 
 class HttpRequest:
@@ -45,6 +46,17 @@ class HttpRequest:
         """
 
         return self.mapped_headers.get(name, None)
+
+    def clone(self):
+        request = HttpRequest()
+        request.method = self.method
+        request.url = self.url
+        request.http_version = self.http_version
+        request.headers = list(map(lambda x: x.clone(), self.headers))
+        request.mapped_headers = clone_map(self.mapped_headers)
+        request.query_parameters = self.query_parameters.clone() if self.query_parameters is not None else None
+        request.body = self.body
+        return request
 
     def __str__(self):
         return f"HttpRequest(method: {self.method}, url: {self.url}, http_version: {self.http_version}, headers: {[str(i) for i in self.headers]})"
