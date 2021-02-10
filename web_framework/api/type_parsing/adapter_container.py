@@ -1,5 +1,5 @@
 from web_framework.api.type_parsing import TypeAdapter
-from web_framework.api.module import MethodReturnContentType
+from web_framework.api.module import MethodContentType
 from web_framework.api.api_registry import ApiRegistry
 from web_framework.utils import get_base_classes
 from web_framework.api.type_parsing.default_adapters import *
@@ -20,7 +20,7 @@ class AdapterContainer:
                     raise RuntimeError(f"Two type adapters with type of {i.adapting_type} and content type of {i.content_type} found.")
                 self.type_adapter_dictionary[i.content_type][i.adapting_type] = i
 
-    def find_type_adapter(self, adaptee_type: type, content_type: MethodReturnContentType) -> TypeAdapter:
+    def find_type_adapter(self, adaptee_type: type, content_type: MethodContentType) -> TypeAdapter:
         adapter = self.type_adapter_dictionary.get(content_type, {}).get(adaptee_type, None)
         if adapter is None:
             adapter = self.type_adapter_dictionary.get(content_type, {}).get(object, None)

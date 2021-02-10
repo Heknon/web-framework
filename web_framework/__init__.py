@@ -11,12 +11,12 @@ http_base
     Contains the base HTTP elements such as request and response along with HTTP data types such as HttpStatus
 """
 
-__all__ = ['utils', 'HttpClient', 'HttpServer', 'ApiRegistry', 'MethodReturnContentType', 'ApiClassModule', 'ApiModuleCoordinator',
-           'MethodReturnContentType', 'ApiMethodExecutor', 'TypeAdapter', 'AdapterContainer', 'TextTypeAdapter',
+__all__ = ['utils', 'HttpClient', 'HttpServer', 'ApiRegistry', 'MethodContentType', 'ApiClassModule', 'ApiModuleCoordinator',
+           'MethodContentType', 'ApiMethodExecutor', 'TypeAdapter', 'AdapterContainer', 'TextTypeAdapter',
            'JsonTypeAdapter', 'HtmlTypeAdapter', 'HttpRequest', 'HttpResponse', 'HttpMethod', 'HttpHeader', 'HttpStatus', 'ContentType',
            'QueryParameters', 'Parser', 'RequestParser', 'RequestMappingMeta', 'RequestMapping', 'GetMapping', 'PutMapping',
            'PatchMapping', 'PostMapping', 'DeleteMapping', 'ConnectMapping', 'TraceMapping', 'HeadMapping', 'OptionsMapping', 'QueryParameter',
-           'Parameter', 'ConditionalHandler', 'ApiModule', 'ApiMethodModule']
+           'Parameter', 'ConditionalHandler', 'ApiModule', 'ApiMethodModule', "RequestBody", 'PathVariable']
 
 import web_framework.utils as utils
 from .http_base import *

@@ -7,11 +7,11 @@ from web_framework.utils import get_meta_attribute, has_meta_attribute, get_base
 
 
 class ApiMethodExecutor:
-    def __init__(self, method: Callable, adapter_container, response, client):
+    def __init__(self, method: Callable, api_registry, response, client):
         if not has_meta_attribute(method):
             raise RuntimeError(f"Method passed does not have method meta! {method}")
         self.method = method
-        self.adapter_container = adapter_container
+        self.api_registry = api_registry
         self.response = response
         self.client = client
         self.meta = get_meta_attribute(method)
@@ -22,13 +22,15 @@ class ApiMethodExecutor:
         try:
             result = self.method(**self.get_results(request))
             result_type = type(result)
-            adapter = self.adapter_container.find_type_adapter(result_type, self.content_type)
+            adapter = self.api_registry.adapter_container.find_type_adapter(result_type, self.content_type)
             return adapter.encode(result)
         except Exception as error:
             print(traceback.format_exc())
+            if self.meta.error_handler is None:
+                return b""
             result = self.meta.error_handler(error, **self.get_results(request))
             result_type = type(error)
-            adapter = self.adapter_container.find_type_adapter(result_type, self.content_type)
+            adapter = self.api_registry.adapter_container.find_type_adapter(result_type, self.content_type)
             return adapter.encode(result)
 
     def get_results(self, request):
@@ -48,6 +50,6 @@ class ApiMethodExecutor:
                 continue
             if Parameter in get_base_classes(value) and value.name is None:
                 value.name = n
-            name, result = value.parse(method=self.method, request=request, adapter_container=self.adapter_container)
+            name, result = value.parse(method=self.method, request=request, api_registry=self.api_registry)
             results[name] = result
         return results

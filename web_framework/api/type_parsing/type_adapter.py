@@ -1,12 +1,12 @@
 from typing import TypeVar, Generic
 
-from web_framework.api.module import MethodReturnContentType
+from web_framework.api.module import MethodContentType
 
 T = TypeVar('T')
 
 
 class TypeAdapter(Generic[T]):
-    def __init__(self, adapting_type, content_type: MethodReturnContentType):
+    def __init__(self, adapting_type, content_type: MethodContentType):
         self.adapting_type = adapting_type
         self.content_type = content_type
 

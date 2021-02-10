@@ -1,5 +1,6 @@
 import inspect
 import os
+import re
 from typing import Callable
 
 from web_framework.api.module import ApiModule, ApiClassModule, ApiMethodModule
@@ -35,21 +36,34 @@ class ApiModuleCoordinator:
         self.registered_modules = self._filter_and_get_registered_modules()
         self.full_route_method_map = self._get_url_method_map()
         self.conditional_routes = self._get_conditional_routes()
+        self.parameter_method_cache = {}
         self.__type_decoders = set()
         self.__type_encoders = set()
 
-    def find_matching_method(self, url: str) -> Callable:
+    def find_matching_method(self, url: str, request) -> Callable:
         """
         find a method matching the route given
 
         :param url: the route to find a method for
+        :param request the request
         :return: method or None if no route found
         """
 
-        if url not in self.full_route_method_map:
-            return None
-        else:
+        if url in self.parameter_method_cache:
+            return self.parameter_method_cache[url][0]
+
+        has_method_call = url in self.full_route_method_map
+        conditional_method = self.find_conditional_handler_match(request)
+        path_method = self.find_parameter_match(request)
+
+        if path_method is not None:
+            return path_method
+        elif conditional_method is not None:
+            return conditional_method
+        elif has_method_call:
             return self.full_route_method_map[url]
+        else:
+            return None
 
     def find_conditional_handler_match(self, request) -> Callable:
         """
@@ -67,6 +81,52 @@ class ApiModuleCoordinator:
                     return method
             break
         return None
+
+    def find_parameter_match(self, request):
+        """
+        finds a route that matches the request url and uses path variables
+
+        :param request: the request
+        :return: None if not found otherwise corresponding method
+        """
+
+        c = re.compile('{(.*?)}')
+        for (path, method) in self.full_route_method_map.items():
+            if c.search(path) is not None and self.url_matches_path(path, request.url):
+                self.parameter_method_cache[request.url] = (method, path)
+                return method
+
+        return None
+
+    def url_matches_path(self, path, url) -> bool:
+        """
+        Checks if url matches path with path variables
+
+        :param path: the path
+        :param url: the url
+        :return: true if match otherwise false
+        """
+
+        c = re.compile('({(.*?)})')
+        offset = 0
+
+        prev_end_url = 0
+        prev_end_path = 0
+        for match in c.finditer(path):
+            start_in_path = match.start()
+            path_string = match.group()
+            end_in_url = start_in_path + offset
+            while end_in_url < len(url) and url[end_in_url] != '/':
+                end_in_url += 1
+
+            if url[prev_end_url:start_in_path + offset] != path[prev_end_path:start_in_path]:
+                return False
+
+            prev_end_url = end_in_url
+            prev_end_path = match.end()
+            offset = end_in_url - start_in_path - offset - len(path_string)
+
+        return url[prev_end_url::] == path[prev_end_path::]
 
     def _get_conditional_routes(self):
         """

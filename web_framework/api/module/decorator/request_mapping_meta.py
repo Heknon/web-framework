@@ -1,11 +1,11 @@
 from typing import Callable, Tuple
 
-from web_framework.api.module import MethodReturnContentType
+from web_framework.api.module import MethodContentType
 
 
 class RequestMappingMeta:
     def __init__(self, *routes: str,
-                 content_type: MethodReturnContentType = MethodReturnContentType.JSON,
+                 content_type: MethodContentType = MethodContentType.JSON,
                  acceptable_methods=None, error_handler: Callable[[Exception], object] = None):
         self.routes = routes
         self.content_type = content_type

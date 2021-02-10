@@ -1,12 +1,12 @@
 from typing import Callable
 
-from web_framework.api.module import MethodReturnContentType
+from web_framework.api.module import MethodContentType
 from web_framework.http_base.data_type import HttpMethod
 from . import RequestMappingMeta, RequestMapping
 
 
 class GetMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.GET}
@@ -14,7 +14,7 @@ class GetMapping(RequestMapping):
 
 
 class PostMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.POST}
@@ -22,7 +22,7 @@ class PostMapping(RequestMapping):
 
 
 class PutMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.PUT}
@@ -30,7 +30,7 @@ class PutMapping(RequestMapping):
 
 
 class PatchMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.PATCH}
@@ -38,7 +38,7 @@ class PatchMapping(RequestMapping):
 
 
 class DeleteMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.DELETE}
@@ -46,7 +46,7 @@ class DeleteMapping(RequestMapping):
 
 
 class HeadMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.HEAD}
@@ -54,7 +54,7 @@ class HeadMapping(RequestMapping):
 
 
 class ConnectMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.CONNECT}
@@ -62,7 +62,7 @@ class ConnectMapping(RequestMapping):
 
 
 class OptionsMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.OPTIONS}
@@ -70,7 +70,7 @@ class OptionsMapping(RequestMapping):
 
 
 class TraceMapping(RequestMapping):
-    def __init__(self, *routes: str, content_type: MethodReturnContentType = MethodReturnContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
+    def __init__(self, *routes: str, content_type: MethodContentType = MethodContentType.JSON, error_handler: Callable[[Exception], object] = None, meta: RequestMappingMeta = None):
         if meta is None:
             meta = RequestMappingMeta(*routes, content_type=content_type, acceptable_methods={}, error_handler=error_handler)
         meta.acceptable_methods = {HttpMethod.TRACE}

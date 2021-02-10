@@ -1,6 +1,5 @@
 import importlib
 import os
-import inspect
 
 from web_framework import HttpResponse, HttpStatus
 from web_framework.api.module import ApiModuleCoordinator
@@ -60,7 +59,7 @@ class ApiRegistry:
             response = HttpResponse.build_empty_status_response(
                 request, HttpStatus.BAD_REQUEST, f'Class {clazz} and method {method} do not accept {request.method}', client)
         else:
-            response = HttpResponse.build_from_function(request, method, self.adapter_container, client)
+            response = HttpResponse.build_from_function(request, method, self, client)
 
         return response
 
@@ -91,10 +90,20 @@ class ApiRegistry:
                 module = importlib.import_module(rel_path)
                 self.parse_module(module)
 
-    def parse_module(self, module, max_rec=0):
-        if max_rec > 10:
+    def parse_module(self, module, max_rec=10):
+        """
+        Recursively parses modules to a set limit
+
+        If a module is encountered in the init file will recursively parse it too
+
+        :param module: the beginning module
+        :param max_rec: the recursion limit
+        :return: Nothing. Modifies the contains_request_mapping_meta field
+        """
+
+        if max_rec <= 0:
             return
-        max_rec += 1
+        max_rec -= 1
         for i in dir(module):
             data = getattr(module, i)
             if type(data) is type(module):

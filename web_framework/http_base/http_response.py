@@ -86,22 +86,22 @@ class HttpResponse:
         client.send(self.__data)
 
     @staticmethod
-    def build_from_function(request: HttpRequest, fn: Callable, adapter_container, client):
+    def build_from_function(request: HttpRequest, fn: Callable, api_registry, client):
         """
         builds an HttpResponse object mainly from a method. This method should be an Api Method
 
         :param request: the http request that a response is being built for
         :param fn: the method to use to build data with
-        :param adapter_container: the adapter container used to convert the data received by the method
+        :param api_registry: the api registry
         :param client: the http client to send the response to
         :return: the built HttpResponse
         """
 
         from web_framework.api.module import ApiMethodExecutor
         response_orig = HttpResponse.build_empty_status_response(request, HttpStatus.OK, None, client)
-        executor = ApiMethodExecutor(fn, adapter_container, response_orig, client)
+        executor = ApiMethodExecutor(fn, api_registry, response_orig, client)
         res = executor.execute(request)
-        return HttpResponse(executor.content_type, response_orig.http_version, response_orig.status, res, client)
+        return HttpResponse(str(executor.content_type.value), response_orig.http_version, response_orig.status, res, client)
 
     @staticmethod
     def build_empty_status_response(request: HttpRequest, status: HttpStatus, additional_info: str, client):

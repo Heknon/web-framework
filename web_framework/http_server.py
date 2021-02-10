@@ -121,13 +121,10 @@ class HttpServer:
         :param request: the parsed HttpRequest
         """
 
-        has_method_call = request.url in self.api_registry.api_module_coordinator.full_route_method_map
-        conditional_method = self.api_registry.api_module_coordinator.find_conditional_handler_match(request)
-        if conditional_method is not None:
-            self.api_registry.execute_method(conditional_method, request, client).send_to_client(client)
+        method = self.api_registry.api_module_coordinator.find_matching_method(request.url, request)
 
-        if has_method_call:
-            method = self.api_registry.api_module_coordinator.find_matching_method(request.url)
+        if method is not None:
+            method = self.api_registry.api_module_coordinator.find_matching_method(request.url, request)
             self.api_registry.execute_method(method, request, client).send_to_client(client)
         else:
             path = self.root_index_directory + (self.index_file if request.url == "/" else request.url)
